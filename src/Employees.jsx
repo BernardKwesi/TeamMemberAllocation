@@ -2,6 +2,7 @@ import { useState } from "react";
 import femaleProfile from "./images/femaleProfile.jpg";
 import maleProfile from "./images/maleProfile.jpg";
 const Employees = () => {
+  const [selectedTeam, setTeam] = useState("TeamB");
   const [employees, setEmployees] = useState([
     {
       id: 1,
@@ -88,15 +89,59 @@ const Employees = () => {
       teamName: "TeamD",
     },
   ]);
+
+  function handleTeamSelectionChange(event) {
+    console.log(event.target.value);
+    setTeam(event.target, value);
+  }
+
+  function handleEmployeeCardClick(event) {}
+
   return (
     <div className="container">
-      <div className="row">
-        {employees.map((employee) => (
-          <div>
-            <p>{employee.fullName}</p>
-            <img src={maleProfile} alt="" />
+      <div className="row justify-content-center mt-3 mb-3">
+        <div className="col-6">
+          <select
+            name=""
+            id=""
+            className="form-select form-select-lg"
+            value={selectedTeam}
+            onChange={handleTeamSelectionChange}
+          >
+            <option value="TeamA">Team A</option>
+            <option value="TeamB">Team B</option>
+            <option value="TeamC">Team C</option>
+            <option value="TeamD">Team D</option>
+          </select>
+        </div>
+      </div>
+
+      <div className="row justify-content-center mt-3 mb-3">
+        <div className="col-8">
+          <div className="card-collection">
+            {employees.map((employee) => (
+              <div
+                className="card m-2"
+                id={employee.id}
+                style={{ cursor: "pointer" }}
+                onClick={handleEmployeeCardClick}
+              >
+                <img
+                  src={employee.gender == "male" ? maleProfile : femaleProfile}
+                  className="card-img-top"
+                  alt=""
+                />
+                <div className="card-body">
+                  <h5 className="card-title">Full Name: {employee.fullName}</h5>
+                  <p className="card-text">
+                    <b>Designation: </b>
+                    {employee.designation}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );
